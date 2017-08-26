@@ -2,26 +2,43 @@ package com.example.android.justjava
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
-import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity() {
     private var quantity = 2
-    private var pricePerItem = 2
+    private var PRICE_PER_ITEM = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         display(quantity)
+
+        /*
+        var textView = TextView(this)
+        textView.setText("Wow!")
+        setContentView(textView)*/
     }
 
     fun submitOrder(view: View) {
-        var priceMessage = "Total item count: " + quantity + " coffees"
-        priceMessage += "\n$" + quantity * pricePerItem
-        priceMessage += "\nThank You!"
+        val price = calculatePrice()
+        val orderSummary = createOrderSummary(price)
+        displayMessage(orderSummary)
+    }
 
-        displayMessage(priceMessage)
+    private fun calculatePrice(): Int {
+        val price = quantity * PRICE_PER_ITEM
+        return price
+    }
+
+    private fun createOrderSummary(price: Int): String {
+        Log.i("MainActivity.java", "Order with price $price has been placed")
+        var message = "Name: Java"
+        message += "\nQuantity: " + quantity
+        message += "\nTotal: $" + price
+        message += "\nThank you!"
+        return message
     }
 
     fun increment(view: View) {
@@ -39,13 +56,8 @@ class MainActivity : AppCompatActivity() {
         quantityTextView.text = number.toString()
     }
 
-    private fun displayPrice(number: Int) {
-        val priceTextView = findViewById<View>(R.id.price_text_view) as TextView
-        priceTextView.text = NumberFormat.getCurrencyInstance().format(number)
-    }
-
     private fun displayMessage(message: String) {
-        val priceTextView = findViewById<View>(R.id.price_text_view) as TextView
-        priceTextView.text = message
+        val oderSummaryTextView = findViewById<View>(R.id.order_summary_text_view) as TextView
+        oderSummaryTextView.text = message
     }
 }

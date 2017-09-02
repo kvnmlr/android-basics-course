@@ -3,22 +3,24 @@ package com.example.android.miwok
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+
 
 class NumbersActivity : AppCompatActivity() {
     private var wordsList: ArrayList<String> = ArrayList()
     private var wordsArray: Array<String> = arrayOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
-    private lateinit var words: Array<String>
+    private lateinit var wordsEnglish: Array<String>
+    private lateinit var wordsMiwok: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_numbers)
-        var rootView = findViewById(R.id.root_view_numbers) as LinearLayout
+        setContentView(R.layout.words_list)
 
-        words = arrayOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+        wordsEnglish = arrayOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+        wordsMiwok = arrayOf("lutti", "otiiko", "tolookosu", "oyyisa", "massokka", "temmokka", "kenekaku", "kawinta", "wo'e", "na'aacha")
+        var wordList: ArrayList<Word> = ArrayList()
 
-        for ((index, value) in words.withIndex()) {
+        for ((index, value) in wordsEnglish.withIndex()) {
             wordsList.add(value)
             Log.v("NumbersActivity", "$index: $value")
             Log.v("NumbersActivity", "Word at index $index: ${wordsList[index]}")
@@ -26,9 +28,12 @@ class NumbersActivity : AppCompatActivity() {
             Log.v("NumbersActivity", "Word at index $index: $value")
             assert(wordsList[index] == wordsArray[index] && wordsList[index] == value)
 
-            var wordView = TextView(this)
-            wordView.text = words[index]
-            rootView.addView(wordView)
+            wordList.add(Word(value, wordsMiwok[index]))
         }
+
+        val itemsAdapter = WordAdapter(this, wordList)
+        val listView = findViewById(R.id.list) as ListView
+
+        listView.adapter = itemsAdapter
     }
 }

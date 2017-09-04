@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 
 class WordAdapter : ArrayAdapter<Word> {
@@ -22,9 +23,17 @@ class WordAdapter : ArrayAdapter<Word> {
 
         val originalTextView: TextView = listItemView?.findViewById(R.id.list_item_original) as TextView
         val translationTextView: TextView = listItemView.findViewById(R.id.list_item_translation) as TextView
+        val imageView: ImageView = listItemView.findViewById(R.id.list_item_image) as ImageView
 
         originalTextView.text = currentWord.getMiwokTranslation()
         translationTextView.text = currentWord.getDefaultTranslation()
+
+        if (currentWord.hasImage()) {
+            imageView.setImageResource(currentWord.getImageResourceID())
+            imageView.visibility = View.VISIBLE
+        } else {
+            imageView.visibility = View.GONE
+        }
 
         return listItemView
     }

@@ -18,7 +18,7 @@ class PhrasesActivity : AppCompatActivity() {
 
         wordsEnglish.mapIndexedTo(wordList) { index, value -> Word(value, wordsMiwok[index]) }
 
-        val itemsAdapter = WordAdapter(this, wordList)
+        val itemsAdapter = WordAdapter(this, wordList, R.color.category_phrases)
         val listView = findViewById(R.id.list) as ListView
 
         listView.adapter = itemsAdapter

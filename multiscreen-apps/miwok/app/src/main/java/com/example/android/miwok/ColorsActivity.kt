@@ -21,7 +21,7 @@ class ColorsActivity : AppCompatActivity() {
             wordList.add(Word(value, wordsMiwok[index]))
         }
 
-        val itemsAdapter = WordAdapter(this, wordList)
+        val itemsAdapter = WordAdapter(this, wordList, R.color.category_colors)
         val listView = findViewById(R.id.list) as ListView
 
         listView.adapter = itemsAdapter

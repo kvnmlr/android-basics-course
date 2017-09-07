@@ -45,7 +45,7 @@ class NumbersActivity : AppCompatActivity() {
             wordList.add(Word(value, wordsMiwok[index], imageResrouces[index]))
         }
 
-        val itemsAdapter = WordAdapter(this, wordList)
+        val itemsAdapter = WordAdapter(this, wordList, R.color.category_numbers)
         val listView = findViewById(R.id.list) as ListView
 
         listView.adapter = itemsAdapter

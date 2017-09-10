@@ -17,9 +17,7 @@ class ColorsActivity : AppCompatActivity() {
         wordsMiwok = arrayOf("lutti", "otiiko", "tolookosu", "oyyisa", "massokka", "temmokka", "kenekaku", "kawinta", "wo'e", "na'aacha")
         var wordList: ArrayList<Word> = ArrayList()
 
-        for ((index, value) in wordsEnglish.withIndex()) {
-            wordList.add(Word(value, wordsMiwok[index]))
-        }
+        wordsEnglish.mapIndexedTo(wordList) { index, value -> Word(value, wordsMiwok[index]) }
 
         val itemsAdapter = WordAdapter(this, wordList, R.color.category_colors)
         val listView = findViewById(R.id.list) as ListView

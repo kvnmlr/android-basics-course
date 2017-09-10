@@ -43,6 +43,13 @@ class WordAdapter(context: Context?, objects: ArrayList<Word>, backgroundColor: 
             imageView.visibility = View.GONE
         }
 
+        /*if (currentWord.hasAudio()) {
+            listItemView.setOnClickListener({
+                Toast.makeText(context, currentWord.getImageResourceID().toString(), Toast.LENGTH_SHORT).show()
+                val mediaPlayer: MediaPlayer = MediaPlayer.create(context, currentWord.getAudioResrouceID())
+                mediaPlayer.start()
+            })
+        }*/
         return listItemView
     }
 }

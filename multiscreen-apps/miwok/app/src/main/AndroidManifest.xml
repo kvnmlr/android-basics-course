@@ -25,22 +25,25 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".NumbersActivity"
-            android:label="@string/category_numbers">
+            android:label="@string/category_numbers"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".FamilyActivity">
+            android:name=".FamilyActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
-            android:name=".ColorsActivity">
+            android:name=".ColorsActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
-            android:name=".PhrasesActivity">
+            android:name=".PhrasesActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

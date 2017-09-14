@@ -5,7 +5,7 @@ These are the courses from the [Google developers training](https://developers.g
 
 ---
 ## User Interface Course
-More or less exact implementation of the contents taugt in the [course on udacity](https://www.udacity.com/course/android-basics-user-interface--ud834).
+Implementation of the contents from the [course on udacity](https://www.udacity.com/course/android-basics-user-interface--ud834).
 
 * Layouts
 * Drawables
@@ -15,10 +15,21 @@ More or less exact implementation of the contents taugt in the [course on udacit
 * Colors
 
 ## User Input
-tbd.
+Implementation of the contents from the [course on udacity](https://www.udacity.com/course/android-basics-user-input--ud836).
+
+* Buttons
+* Event Listeners
+* Object-Oriented Programming
 
 ## Multi-Scree Apps
-tbd.
+Implementation of the contents from the [course on udacity](https://www.udacity.com/course/android-basics-multiscreen-apps--ud839).
+
+* Multiple Activities
+* MediaPlayer
+* Fragments
+* ListViews and Adapters
+* Intents
+* ViewPager and Tabs
 
 ## Networking
 tbd.

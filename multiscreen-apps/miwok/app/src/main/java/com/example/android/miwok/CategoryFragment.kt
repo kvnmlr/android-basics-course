@@ -5,6 +5,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +38,13 @@ open class CategoryFragment : Fragment() {
     }
 
     override fun onStop() {
+        Log.i("CategoryFragment", "onStop()")
         super.onStop()
         releaseMediaPlayer()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.i("CategoryFragment", "onCreateView()")
         val rootView: View = inflater!!.inflate(R.layout.words_list, container, false)
 
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)

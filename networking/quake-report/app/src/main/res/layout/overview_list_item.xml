@@ -2,25 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp">
     <TextView
         android:id="@+id/list_item_magnitude"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/magnitude_circle"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:layout_marginRight="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        tools:text="8.9"/>
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="3.4"/>
-    <TextView
-        android:id="@+id/list_item_location"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/list_item_location_relative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="San Francisco"/>
+        <TextView
+            android:id="@+id/list_item_location_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="San Francisco"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="San Francisco"/>
-    <TextView
-        android:id="@+id/list_item_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="Feb 34, 2017"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/list_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Feb 34, 2017"/>
+        <TextView
+            android:id="@+id/list_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Feb 34, 2017"/>
+    </LinearLayout>
+
+
 
 </LinearLayout>

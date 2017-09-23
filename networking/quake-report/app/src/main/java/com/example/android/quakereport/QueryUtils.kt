@@ -1,10 +1,18 @@
 package com.example.android.quakereport
 
+import android.text.TextUtils
 import android.util.Log
 
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,12 +37,16 @@ object QueryUtils {
      * Return a list of [Earthquake] objects that has been built up from
      * parsing a JSON response.
      */
-    fun extractEarthquakes(): ArrayList<EarthQuake> {
+    fun extractEarthquakes(jsonData: String): ArrayList<EarthQuake> {
+        var data = jsonData
+        if (TextUtils.isEmpty(jsonData)) {
+            data = SAMPLE_JSON_RESPONSE
+        }
 
         val earthquakes = ArrayList<EarthQuake>()
 
         try {
-            val root = JSONObject(SAMPLE_JSON_RESPONSE)
+            val root = JSONObject(data)
             val features = root.getJSONArray("features")
             for (i in 0..(features.length() - 1)) {
                 val props = (features.get(i) as JSONObject).getJSONObject("properties")
@@ -42,8 +54,9 @@ object QueryUtils {
                 val magnitude = props.getString("magFormat")
                 val location = props.getString("place")
                 val dateMillisec = props.getLong("time")
+                val url = props.getString("url")
 
-                val earthquake = EarthQuake(magnitude, location, dateMillisec)
+                val earthquake = EarthQuake(magnitude, location, dateMillisec, url)
                 earthquakes.add(earthquake)
             }
 
@@ -56,4 +69,47 @@ object QueryUtils {
         return earthquakes
     }
 
+    fun makeHttpRequest(url: URL): String {
+        var jsonResponse = ""
+        if (url == null) {
+            return jsonResponse
+        }
+
+        var urlConnection: HttpURLConnection? = null
+        var inputStream: InputStream? = null
+        try {
+            urlConnection = url.openConnection() as HttpURLConnection?
+            urlConnection?.requestMethod = "GET"
+            urlConnection?.connectTimeout = 1500
+            urlConnection?.readTimeout = 1000
+            urlConnection?.connect()
+
+            if (urlConnection?.responseCode == 200) {
+                inputStream = urlConnection?.inputStream
+                jsonResponse = readFromStream(inputStream)
+            } else {
+                Log.e("QueryUtils:", "Response code from $url was not 200")
+            }
+        } catch (e: Exception) {
+            Log.e("QueryUtils:", "Exception in network connection to server: " + e.toString())
+        } finally {
+            urlConnection?.disconnect()
+            inputStream?.close()
+        }
+        return jsonResponse
+    }
+
+    private fun readFromStream(inputStream: InputStream): String {
+        var out = StringBuilder()
+        if (inputStream != null) {
+            val inputStreamReader = InputStreamReader(inputStream, Charset.forName("UTF-8"))
+            val reader = BufferedReader(inputStreamReader)
+            var line = reader.readLine()
+            while (line != null) {
+                out.append(line)
+                line = reader.readLine()
+            }
+        }
+        return out.toString()
+    }
 }

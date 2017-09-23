@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat
 
 
 
-class EarthQuake(private var magnitude: String = "", location: String = "", date: Long = 0) {
+class EarthQuake(private var magnitude: String = "", location: String = "", date: Long = 0, var url: String = "") {
     val dateDay: String = SimpleDateFormat("LLL dd, yyyy").format(Date(date))
     val dateTime: String = SimpleDateFormat("h:mm a").format(Date(date))
 

@@ -10,6 +10,10 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.graphics.drawable.GradientDrawable
+import android.support.v4.app.ActivityCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+
 
 class EarthquakeListAdapter (context: Activity, earthquakes: ArrayList<EarthQuake>) : ArrayAdapter<EarthQuake>(context, 0, earthquakes) {
 
@@ -31,7 +35,6 @@ class EarthquakeListAdapter (context: Activity, earthquakes: ArrayList<EarthQuak
 
         val magnitudeTextView = listItemView!!.findViewById(R.id.list_item_magnitude) as TextView
         magnitudeTextView.text = currentEarthquake.magFormat
-
 
         val magnitudeCircle = magnitudeTextView.background as GradientDrawable
         magnitudeCircle.setColor(getMagnitudeColor(currentEarthquake.mag))
@@ -58,17 +61,17 @@ class EarthquakeListAdapter (context: Activity, earthquakes: ArrayList<EarthQuak
     private fun getMagnitudeColor(magnitude: Double): Int {
         val magnitudeColorResourceId: Int
         val magnitudeFloor = Math.floor(magnitude).toInt()
-        when (magnitudeFloor) {
-            0, 1 -> magnitudeColorResourceId = R.color.magnitude1
-            2 -> magnitudeColorResourceId = R.color.magnitude2
-            3 -> magnitudeColorResourceId = R.color.magnitude3
-            4 -> magnitudeColorResourceId = R.color.magnitude4
-            5 -> magnitudeColorResourceId = R.color.magnitude5
-            6 -> magnitudeColorResourceId = R.color.magnitude6
-            7 -> magnitudeColorResourceId = R.color.magnitude7
-            8 -> magnitudeColorResourceId = R.color.magnitude8
-            9 -> magnitudeColorResourceId = R.color.magnitude9
-            else -> magnitudeColorResourceId = R.color.magnitude10plus
+        magnitudeColorResourceId = when (magnitudeFloor) {
+            0, 1 -> R.color.magnitude1
+            2 -> R.color.magnitude2
+            3 -> R.color.magnitude3
+            4 -> R.color.magnitude4
+            5 -> R.color.magnitude5
+            6 -> R.color.magnitude6
+            7 -> R.color.magnitude7
+            8 -> R.color.magnitude8
+            9 -> R.color.magnitude9
+            else -> R.color.magnitude10plus
         }
         return ContextCompat.getColor(context, magnitudeColorResourceId)
     }

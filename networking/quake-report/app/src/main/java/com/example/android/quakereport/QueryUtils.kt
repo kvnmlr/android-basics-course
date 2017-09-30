@@ -51,7 +51,7 @@ object QueryUtils {
             for (i in 0..(features.length() - 1)) {
                 val props = (features.get(i) as JSONObject).getJSONObject("properties")
 
-                val magnitude = props.getString("magFormat")
+                val magnitude = props.getString("mag")
                 val location = props.getString("place")
                 val dateMillisec = props.getLong("time")
                 val url = props.getString("url")
@@ -69,7 +69,9 @@ object QueryUtils {
         return earthquakes
     }
 
-    fun makeHttpRequest(url: URL): String {
+    fun makeHttpRequest(urlString: String): String {
+        Log.i("Utils", urlString)
+        val url = URL(urlString)
         var jsonResponse = ""
         if (url == null) {
             return jsonResponse

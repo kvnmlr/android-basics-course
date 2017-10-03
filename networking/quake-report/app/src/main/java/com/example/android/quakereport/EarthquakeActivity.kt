@@ -40,7 +40,7 @@ class EarthquakeActivity : AppCompatActivity() {
 
     companion object {
         val LOG_TAG = "EarthquakeActivity"
-        val USGS_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02"
+        val USGS_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10"
     }
 
     inner class EarthQuakeAsyncTask : AsyncTask<String, Void, ArrayList<EarthQuake>>() {

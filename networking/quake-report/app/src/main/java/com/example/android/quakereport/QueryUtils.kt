@@ -2,18 +2,17 @@ package com.example.android.quakereport
 
 import android.text.TextUtils
 import android.util.Log
+import com.example.android.quakereport.EarthquakeActivity.Companion.LOG_TAG
 
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
+import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.Charset
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -47,14 +46,24 @@ object QueryUtils {
 
         try {
             val root = JSONObject(data)
+            if (!root.has("features")) {
+                return earthquakes
+            }
             val features = root.getJSONArray("features")
             for (i in 0..(features.length() - 1)) {
                 val props = (features.get(i) as JSONObject).getJSONObject("properties")
-
-                val magnitude = props.getString("mag")
-                val location = props.getString("place")
-                val dateMillisec = props.getLong("time")
-                val url = props.getString("url")
+                var magnitude = ""
+                var location = ""
+                var dateMillisec: Long = 0
+                var url = ""
+                if (props.has("mag"))
+                    magnitude = props.getString("mag")
+                if (props.has("place"))
+                    location = props.getString("place")
+                if (props.has("time"))
+                    dateMillisec = props.getLong("time")
+                if (props.has("url"))
+                    url = props.getString("url")
 
                 val earthquake = EarthQuake(magnitude, location, dateMillisec, url)
                 earthquakes.add(earthquake)
@@ -71,7 +80,7 @@ object QueryUtils {
 
     fun makeHttpRequest(urlString: String): String {
         Log.i("Utils", urlString)
-        val url = URL(urlString)
+        val url = createUrl(urlString)
         var jsonResponse = ""
         if (url == null) {
             return jsonResponse
@@ -113,5 +122,18 @@ object QueryUtils {
             }
         }
         return out.toString()
+    }
+
+    /**
+     * Returns new URL object from the given string URL.
+     */
+    private fun createUrl(stringUrl: String): URL? {
+        try {
+            return URL(stringUrl)
+
+        } catch (e: MalformedURLException) {
+            Log.e(LOG_TAG, "Problem building the URL ", e)
+        }
+        return null
     }
 }

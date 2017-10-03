@@ -8,14 +8,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-import java.util.ArrayList
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.app.ActivityCompat.startActivity
-import android.content.Intent
-import android.net.Uri
 
 
-class EarthquakeListAdapter (context: Activity, earthquakes: ArrayList<EarthQuake>) : ArrayAdapter<EarthQuake>(context, 0, earthquakes) {
+class EarthquakeListAdapter (context: Activity, earthquakes: List<EarthQuake>) : ArrayAdapter<EarthQuake>(context, 0, earthquakes) {
 
     /**
      * Provides a view for an AdapterView (ListView, GridView, etc.)

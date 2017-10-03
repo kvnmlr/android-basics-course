@@ -3,9 +3,6 @@ package com.example.android.quakereport
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import android.support.v4.content.ContextCompat
-
-
 
 class EarthQuake(private var magnitude: String = "", location: String = "", date: Long = 0, var url: String = "") {
     val dateDay: String = SimpleDateFormat("LLL dd, yyyy").format(Date(date))

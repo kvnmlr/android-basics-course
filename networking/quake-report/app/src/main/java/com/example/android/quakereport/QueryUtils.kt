@@ -95,7 +95,7 @@ object QueryUtils {
             urlConnection?.connect()
 
             if (urlConnection?.responseCode == 200) {
-                inputStream = urlConnection?.inputStream
+                inputStream = urlConnection.inputStream
                 jsonResponse = readFromStream(inputStream)
             } else {
                 Log.e("QueryUtils:", "Response code from $url was not 200")
@@ -110,7 +110,7 @@ object QueryUtils {
     }
 
     private fun readFromStream(inputStream: InputStream): String {
-        var out = StringBuilder()
+        val out = StringBuilder()
         if (inputStream != null) {
             val inputStreamReader = InputStreamReader(inputStream, Charset.forName("UTF-8"))
             val reader = BufferedReader(inputStreamReader)

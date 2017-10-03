@@ -8,11 +8,13 @@ import android.net.Uri
 import android.app.LoaderManager
 import android.content.Loader
 import android.util.Log
+import android.widget.TextView
 
 
 class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<EarthQuake>> {
-    private lateinit var mAdapter: EarthquakeListAdapter
-
+    private var mAdapter: EarthquakeListAdapter? = null
+    private lateinit var mEarthquakeListView: ListView
+    private lateinit var mEmptyStateTextView: TextView
     override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<List<EarthQuake>> {
         Log.i(LOG_TAG, "onCreateLoader()")
         return EarthquakeLoader(this, USGS_URL)
@@ -20,11 +22,13 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
 
     override fun onLoaderReset(p0: Loader<List<EarthQuake>>?) {
         Log.i(LOG_TAG, "onLoaderReset()")
-        mAdapter.clear()
+        mAdapter!!.clear()
     }
 
     override fun onLoadFinished(p0: Loader<List<EarthQuake>>?, result: List<EarthQuake>?) {
         Log.i(LOG_TAG, "onLoadFinished()")
+        mEmptyStateTextView.setText(R.string.no_earthquakes)
+
         if (result != null) {
             this@EarthquakeActivity.updateUI(result)
         }
@@ -35,6 +39,11 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
         super.onCreate(savedInstanceState)
         setContentView(R.layout.earthquake_activity)
 
+        mEarthquakeListView = findViewById(R.id.list) as ListView
+        mEmptyStateTextView = findViewById(R.id.empty_view) as TextView
+
+        mEarthquakeListView.emptyView = mEmptyStateTextView
+
         // Initialize the loader. Pass in the int ID constant defined above and pass in null for
         // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
         // because this activity implements the LoaderCallbacks interface).
@@ -42,21 +51,18 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
     }
 
     private fun updateUI(earthquakes: List<EarthQuake>) {
-
         // Find a reference to the {@link ListView} in the layout
-        val earthquakeListView = findViewById(R.id.list) as ListView?
-        earthquakeListView?.setOnItemClickListener({ _, _, i: Int, l: Long ->
+        mEarthquakeListView.setOnItemClickListener({ _, _, i: Int, _: Long ->
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(earthquakes[i].url)
             startActivity(intent)
         })
 
-        // Create a new {@link ArrayAdapter} of earthquakes
         mAdapter = EarthquakeListAdapter(this, earthquakes)
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView!!.adapter = mAdapter
+        mEarthquakeListView.adapter = mAdapter
     }
 
     companion object {

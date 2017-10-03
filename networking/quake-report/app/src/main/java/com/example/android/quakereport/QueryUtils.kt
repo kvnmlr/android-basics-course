@@ -37,11 +37,12 @@ object QueryUtils {
      */
     fun extractEarthquakes(jsonData: String): ArrayList<EarthQuake> {
         var data = jsonData
+        val earthquakes = ArrayList<EarthQuake>()
+
         if (TextUtils.isEmpty(jsonData)) {
-            data = SAMPLE_JSON_RESPONSE
+            return earthquakes
         }
 
-        val earthquakes = ArrayList<EarthQuake>()
 
         try {
             val root = JSONObject(data)

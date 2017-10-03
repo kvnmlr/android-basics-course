@@ -12,12 +12,15 @@ class EarthQuake(private var magnitude: String = "", location: String = "", date
     val locationCity: String = location.substringAfter(" of ")
 
     val magFormat = getMagnitudeFormat()
-    val mag = magnitude.toDouble()
+    var mag: Double = 0.0
 
     private fun getMagnitudeFormat(): String {
-        val formatter = DecimalFormat("0.0")
-        return formatter.format(magnitude.replace(',', '.').toFloat())
+        try {
+            mag = magnitude.toDouble()
+            val formatter = DecimalFormat("0.0")
+            return formatter.format(magnitude.replace(',', '.').toFloat())
+        } catch (e: NumberFormatException) {
+            return magnitude
+        }
     }
-
-
 }

@@ -12,6 +12,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.net.ConnectivityManager
+import android.view.Menu
+import android.view.MenuItem
 
 class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<EarthQuake>> {
     private var mAdapter: EarthquakeListAdapter? = null
@@ -74,6 +76,21 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == R.id.action_settings) {
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsIntent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun updateUI(earthquakes: List<EarthQuake>) {

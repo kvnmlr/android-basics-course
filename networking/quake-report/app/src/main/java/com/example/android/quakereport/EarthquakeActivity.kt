@@ -14,6 +14,10 @@ import android.widget.TextView
 import android.net.ConnectivityManager
 import android.view.Menu
 import android.view.MenuItem
+import android.preference.PreferenceManager
+import android.content.SharedPreferences
+
+
 
 class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<List<EarthQuake>> {
     private var mAdapter: EarthquakeListAdapter? = null
@@ -22,8 +26,25 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
 
     override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<List<EarthQuake>> {
         Log.i(LOG_TAG, "onCreateLoader()")
-        return EarthquakeLoader(this, USGS_URL)
-    }
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val minMagnitude = sharedPrefs.getString(
+                getString(R.string.settings_min_magnitude_key),
+                getString(R.string.settings_min_magnitude_default))
+
+        val orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        )
+
+        val baseUri = Uri.parse(USGS_URL)
+        val uriBuilder = baseUri.buildUpon()
+
+        uriBuilder.appendQueryParameter("format", "geojson")
+        uriBuilder.appendQueryParameter("limit", "10")
+        uriBuilder.appendQueryParameter("minmag", minMagnitude)
+        uriBuilder.appendQueryParameter("orderby", orderBy)
+
+        return EarthquakeLoader(this, uriBuilder.toString())    }
 
     override fun onLoaderReset(p0: Loader<List<EarthQuake>>?) {
         Log.i(LOG_TAG, "onLoaderReset()")
@@ -110,7 +131,7 @@ class EarthquakeActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Li
 
     companion object {
         private val LOG_TAG = EarthquakeActivity::class.java.name
-        private val USGS_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10"
+        private val USGS_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query"
         private val EARTHQUAKE_LOADER_ID = 1
     }
 }

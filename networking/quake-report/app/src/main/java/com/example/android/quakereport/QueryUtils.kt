@@ -91,8 +91,8 @@ object QueryUtils {
         try {
             urlConnection = url.openConnection() as HttpURLConnection?
             urlConnection?.requestMethod = "GET"
-            urlConnection?.connectTimeout = 1500
-            urlConnection?.readTimeout = 1000
+            urlConnection?.connectTimeout = 7500
+            urlConnection?.readTimeout = 5000
             urlConnection?.connect()
 
             if (urlConnection?.responseCode == 200) {

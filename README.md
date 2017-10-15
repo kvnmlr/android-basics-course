@@ -1,4 +1,4 @@
-# Android Beginners Courses
+# Android Beginners Courses in Kotlin
 Implementation of course contents using Android Studio. While the courses are taught in Java, these implementations are in [Kotlin](https://kotlinlang.org/docs/reference/android-overview.html) to make it more interesting for me and to learn a new language. Kotlin code can be decompiled to Java.
 
 These are the courses from the [Google developers training](https://developers.google.com/training/android/) for android.
@@ -32,9 +32,18 @@ Implementation of the contents from the [course on udacity](https://www.udacity.
 * ViewPager and Tabs
 
 ## Networking
-tbd.
+* JSON Parsing
+* HTTP Requests
+* Threads and AsyncTask
+* Loaders
+* Preferences
 
 ## Data Storage
-tbd.
+* Data Persistence
+* SQLite
+* CRUD
+* Database Operations
+* Content Providers
+* CursorLoader
 
 

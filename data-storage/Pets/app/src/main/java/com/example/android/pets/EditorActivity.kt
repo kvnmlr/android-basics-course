@@ -55,10 +55,10 @@ class EditorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_editor)
 
         // Find all relevant views that we will need to read user input from
-        mNameEditText = findViewById(R.id.edit_pet_name) as EditText
-        mBreedEditText = findViewById(R.id.edit_pet_breed) as EditText
-        mWeightEditText = findViewById(R.id.edit_pet_weight) as EditText
-        mGenderSpinner = findViewById(R.id.spinner_gender) as Spinner
+        mNameEditText = findViewById<EditText>(R.id.edit_pet_name) as EditText
+        mBreedEditText = findViewById<EditText>(R.id.edit_pet_breed) as EditText
+        mWeightEditText = findViewById<EditText>(R.id.edit_pet_weight) as EditText
+        mGenderSpinner = findViewById<Spinner>(R.id.spinner_gender) as Spinner
 
         setupSpinner()
     }

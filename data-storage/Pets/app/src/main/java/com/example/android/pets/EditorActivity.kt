@@ -26,6 +26,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import com.example.android.pets.data.PetContract.PetEntry
 
 /**
  * Allows user to create a new pet or edit an existing one.
@@ -84,16 +85,16 @@ class EditorActivity : AppCompatActivity() {
                 val selection = parent.getItemAtPosition(position) as String
                 if (!TextUtils.isEmpty(selection)) {
                     mGender = when (selection) {
-                        getString(R.string.gender_male) -> 1 // Male
-                        getString(R.string.gender_female) -> 2 // Female
-                        else -> 0 // Unknown
+                        getString(R.string.gender_male) -> PetEntry.GENDER_MALE
+                        getString(R.string.gender_female) -> PetEntry.GENDER_FEMALE
+                        else -> PetEntry.GENDER_UNKNOWN
                     }
                 }
             }
 
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             override fun onNothingSelected(parent: AdapterView<*>) {
-                mGender = 0 // Unknown
+                mGender = PetEntry.GENDER_UNKNOWN
             }
         }
     }
@@ -108,15 +109,15 @@ class EditorActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // User clicked on a menu option in the app bar overflow menu
         when (item.itemId) {
-        // Respond to a click on the "Save" menu option
+            // Respond to a click on the "Save" menu option
             R.id.action_save ->
                 // Do nothing for now
                 return true
-        // Respond to a click on the "Delete" menu option
+            // Respond to a click on the "Delete" menu option
             R.id.action_delete ->
                 // Do nothing for now
                 return true
-        // Respond to a click on the "Up" arrow button in the app bar
+            // Respond to a click on the "Up" arrow button in the app bar
             android.R.id.home -> {
                 // Navigate back to parent activity (CatalogActivity)
                 NavUtils.navigateUpFromSameTask(this)
